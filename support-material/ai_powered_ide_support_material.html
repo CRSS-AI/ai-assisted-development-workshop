@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Powered Developers: An Infographic on AI in Development</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1e1e2e; /* Catppuccin Base */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+        .kpi-card {
+            background-color: #181825; /* Catppuccin Mantle */
+            color: #cdd6f4; /* Catppuccin Text */
+            border-left: 5px solid #fab387; /* Catppuccin Peach */
+            display: flex;
+            flex-direction: column;
+        }
+        .kpi-card .source-text {
+            margin-top: auto;
+        }
+        .section-icon {
+            font-size: 2.5rem;
+            line-height: 1;
+        }
+        .flow-step {
+            border-color: #45475a; /* Catppuccin Surface1 */
+            background-color: #313244; /* Catppuccin Surface0 */
+        }
+        .flow-arrow {
+            color: #45475a; /* Catppuccin Surface1 */
+        }
+        .agent-core {
+            border: 2px dashed #cba6f7;
+        }
+        .tool-box {
+            border: 1px solid #45475a;
+        }
+    </style>
+</head>
+<body class="text-[#cdd6f4]">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+
+        <header class="text-center my-12">
+            <h1 class="text-4xl md:text-6xl font-black tracking-tight text-[#fab387]">The Augmented Coder</h1>
+            <p class="mt-4 text-lg md:text-xl text-[#cdd6f4] max-w-3xl mx-auto">An industry analysis of how AI-powered development environments are transforming software engineering.</p>
+        </header>
+
+        <section id="definitions" class="my-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white">From Toolbox to Teammate</h2>
+                <p class="mt-2 text-[#a6adc8] max-w-2xl mx-auto">The developer's workbench is evolving from a static set of tools into an intelligent, collaborative partner.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div class="bg-[#313244] p-6 rounded-lg shadow-2xl">
+                    <h3 class="text-xl font-bold mb-4 text-[#89b4fa]">The Traditional IDE</h3>
+                    <p class="text-sm text-[#cdd6f4] mb-4">A software application that consolidates essential developer tools into a single graphical user interface to boost efficiency. [1, 2]</p>
+                    <ul class="space-y-2 text-sm text-[#cdd6f4]">
+                        <li class="flex items-center"><span class="text-lg mr-2 text-[#a6e3a1]">✔</span> Source Code Editor [1, 2]</li>
+                        <li class="flex items-center"><span class="text-lg mr-2 text-[#a6e3a1]">✔</span> Build Automation Tools [1, 2]</li>
+                        <li class="flex items-center"><span class="text-lg mr-2 text-[#a6e3a1]">✔</span> Debugger [1, 2]</li>
+                    </ul>
+                </div>
+                <div class="bg-[#313244] p-6 rounded-lg shadow-2xl">
+                    <h3 class="text-xl font-bold mb-4 text-[#cba6f7]">The AI Coding Assistant</h3>
+                    <p class="text-sm text-[#cdd6f4] mb-4">A tool using AI to augment developer capabilities, automating tedious tasks to free developers for high-level problem-solving. [3, 4, 5, 6] The goal is to enrich and amplify human skills, not replace them. [1, 7, 8, 9]</p>
+                    <p class="text-lg font-semibold text-center mt-6">A paradigm shift from a passive tool to an active <span class="text-[#fab387]">"co-developer"</span>. [1, 14]</p>
+                </div>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold text-center mb-6 text-white">Two Paths of Integration</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-[#181825] p-6 rounded-lg border-l-4 border-[#89b4fa]">
+                        <h4 class="text-lg font-bold">AI Plugins & Extensions</h4>
+                        <p class="text-sm text-[#a6adc8] mt-2">Integrate AI into the familiar IDEs that developers already use, allowing them to gain AI capabilities without abandoning their customized environments. [1, 4, 13]</p>
+                        <p class="text-xs mt-4 font-semibold text-[#89b4fa]">Examples: GitHub Copilot, Tabnine, Amazon Q Developer</p>
+                    </div>
+                    <div class="bg-[#181825] p-6 rounded-lg border-l-4 border-[#cba6f7]">
+                        <h4 class="text-lg font-bold">AI-Native IDEs</h4>
+                        <p class="text-sm text-[#a6adc8] mt-2">Complete development environments built from the ground up with AI as a core, inseparable feature, allowing for deeper, more seamless integration. [13, 14, 15, 16]</p>
+                        <p class="text-xs mt-4 font-semibold text-[#cba6f7]">Examples: Cursor, Windsurf</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="productivity-gains" class="my-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white">The Productivity Boom</h2>
+                <p class="mt-2 text-[#a6adc8] max-w-2xl mx-auto">The evidence is clear: AI assistants significantly accelerate development tasks, but the story is more complex than just speed.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="bg-[#181825] p-6 rounded-lg shadow-2xl kpi-card">
+                    <div class="text-6xl font-extrabold text-[#fab387]">55%</div>
+                    <p class="mt-2 font-semibold">Faster Task Completion</p>
+                    <p class="text-sm text-[#a6adc8] flex-grow">Developers using GitHub Copilot finished tasks significantly faster than a control group. [57]</p>
+                    <p class="text-xs text-[#6c7086] mt-2 source-text">Source: GitHub [57]</p>
+                </div>
+                <div class="bg-[#181825] p-6 rounded-lg shadow-2xl kpi-card">
+                    <div class="text-6xl font-extrabold text-[#fab387]">90%</div>
+                    <p class="mt-2 font-semibold">More Fulfilled at Work</p>
+                    <p class="text-sm text-[#a6adc8] flex-grow">Vast majority of developers report higher job satisfaction and enjoyment when using AI tools. [61]</p>
+                    <p class="text-xs text-[#6c7086] mt-2 source-text">Source: Accenture [61]</p>
+                </div>
+                <div class="bg-[#181825] p-6 rounded-lg shadow-2xl kpi-card">
+                    <div class="text-6xl font-extrabold text-[#fab387]">+22%</div>
+                    <p class="mt-2 font-semibold">Increased Team Velocity</p>
+                    <p class="text-sm text-[#a6adc8] flex-grow">Studies show a measurable increase in pull requests completed per week with AI assistance. [58]</p>
+                    <p class="text-xs text-[#6c7086] mt-2 source-text">Source: Microsoft [58]</p>
+                </div>
+            </div>
+            <div class="mt-12 bg-[#313244] p-6 rounded-lg shadow-2xl">
+                <h3 class="text-xl font-bold text-center mb-4 text-white">Where Developers Save the Most Time</h3>
+                 <p class="text-sm text-[#a6adc8] text-center mb-6 max-w-xl mx-auto">AI assistants excel at automating the most time-consuming and repetitive aspects of coding. This chart breaks down the projected time savings across different development activities, freeing up developers for higher-level problem-solving.</p>
+                <div class="chart-container h-96 md:h-[450px]">
+                    <canvas id="timeSavingsChart"></canvas>
+                </div>
+                <p class="text-xs text-[#6c7086] mt-4 text-center">Source: Cisco [59, 60]</p>
+            </div>
+        </section>
+
+        <section id="llm-fundamentals" class="my-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white">Peeking Under the Hood</h2>
+                <p class="mt-2 text-[#a6adc8] max-w-2xl mx-auto">To master these tools, you need to understand the engine. Here are the core concepts of the Large Language Models that power them.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-[#313244] p-6 rounded-lg shadow-2xl flex flex-col">
+                    <div class="text-center mb-4">
+                        <div class="text-5xl">🧠</div>
+                        <h3 class="text-xl font-bold mt-2 text-[#89b4fa]">The Context Window</h3>
+                    </div>
+                    <p class="text-sm text-[#cdd6f4] flex-grow">This is the AI's <strong>short-term memory</strong>, measured in tokens. [74, 75, 76] It's the maximum amount of information (your code, your chat history) it can consider at once. If your request exceeds the window, the AI "forgets" the oldest information. [74]</p>
+                    <div class="mt-4 pt-4 border-t border-[#45475a]">
+                        <h4 class="font-semibold text-sm text-[#fab387]">Why It Matters:</h4>
+                        <p class="text-xs text-[#a6adc8] mt-1">A larger window means the AI can understand more of your project at once, leading to more coherent and accurate code. [75, 76] A smaller window requires you to be more selective about the context you provide.</p>
+                    </div>
+                </div>
+                <div class="bg-[#313244] p-6 rounded-lg shadow-2xl flex flex-col">
+                    <div class="text-center mb-4">
+                        <div class="text-5xl">🗓️</div>
+                        <h3 class="text-xl font-bold mt-2 text-[#f38ba8]">Knowledge Cutoff</h3>
+                    </div>
+                    <p class="text-sm text-[#cdd6f4] flex-grow">The AI's knowledge is <strong>frozen in time</strong>. It doesn't know about any new libraries, frameworks, or security vulnerabilities that have emerged since its training data was collected. [75, 77]</p>
+                    <div class="mt-4 pt-4 border-t border-[#45475a]">
+                        <h4 class="font-semibold text-sm text-[#fab387]">Why It Matters:</h4>
+                        <p class="text-xs text-[#a6adc8] mt-1">The AI can confidently generate outdated or insecure code. You must provide current context (e.g., new API docs) or use tools with web access to overcome this limitation. [77]</p>
+                    </div>
+                </div>
+                <div class="bg-[#313244] p-6 rounded-lg shadow-2xl flex flex-col">
+                    <div class="text-center mb-4">
+                        <div class="text-5xl">➡️</div>
+                        <h3 class="text-xl font-bold mt-2 text-[#a6e3a1]">Autoregressive Nature</h3>
+                    </div>
+                    <p class="text-sm text-[#cdd6f4] flex-grow">LLMs generate code <strong>one token at a time</strong>, from left to right. [35, 78, 79] They can't plan ahead or see the "big picture" of a complex solution before they start writing. Each new token is based only on the ones that came before it. [79]</p>
+                    <div class="mt-4 pt-4 border-t border-[#45475a]">
+                        <h4 class="font-semibold text-sm text-[#fab387]">Why It Matters:</h4>
+                        <p class="text-xs text-[#a6adc8] mt-1">An early mistake can cascade into a completely wrong solution. [79, 80] It's why they struggle with complex logic that requires planning. Use techniques like Chain-of-Thought to force them to "think" step-by-step.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="agentic-architecture" class="my-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white">The Rise of the Agentic Coder</h2>
+                <p class="mt-2 text-[#a6adc8] max-w-2xl mx-auto">The most advanced AI IDEs overcome core LLM limitations by evolving from simple models into <strong>agents</strong>: an LLM given a toolkit to interact with the world. [6, 7, 14, 19]</p>
+            </div>
+            <div class="bg-[#181825] p-8 rounded-lg shadow-2xl">
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+                    <!-- Agent Core -->
+                    <div class="text-center p-6 rounded-lg agent-core">
+                        <div class="text-5xl mb-2">🤖</div>
+                        <h3 class="text-xl font-bold text-[#cba6f7]">Agent Core (LLM)</h3>
+                        <p class="text-sm text-[#a6adc8]">The reasoning brain.</p>
+                    </div>
+                    <div class="text-5xl text-[#45475a] hidden md:block">&harr;</div>
+                     <!-- Tools -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                        <div class="p-4 rounded-lg tool-box bg-[#313244]">
+                            <div class="text-3xl">📂</div>
+                            <h4 class="font-bold text-sm mt-1">File System</h4>
+                            <p class="text-xs text-[#a6adc8]">Reads/writes files to overcome context limits.</p>
+                        </div>
+                        <div class="p-4 rounded-lg tool-box bg-[#313244]">
+                            <div class="text-3xl">🌐</div>
+                            <h4 class="font-bold text-sm mt-1">Web Search</h4>
+                            <p class="text-xs text-[#a6adc8]">Gets current info to beat knowledge cutoff.</p>
+                        </div>
+                        <div class="p-4 rounded-lg tool-box bg-[#313244]">
+                            <div class="text-3xl">❯_</div>
+                            <h4 class="font-bold text-sm mt-1">Terminal</h4>
+                            <p class="text-xs text-[#a6adc8]">Runs tests to verify its own work.</p>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-center text-sm text-[#cdd6f4] mt-8 max-w-3xl mx-auto">This <strong>agentic architecture</strong> allows the AI to autonomously plan and execute complex tasks like fixing bugs or implementing features, transforming the developer's role from coder to director. [17, 19, 44]</p>
+            </div>
+        </section>
+
+        <section id="quality-quandary" class="my-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white">The Quality Quandary</h2>
+                <p class="mt-2 text-[#a6adc8] max-w-2xl mx-auto">While productivity soars, emerging data warns of a hidden cost: "AI-induced technical debt." [51] The speed of generation can lead to lower-quality, less maintainable code if not carefully managed.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-[#313244] p-6 rounded-lg shadow-2xl">
+                    <h3 class="text-xl font-bold mb-4 text-white">The Rise of "Code Churn"</h3>
+                    <p class="text-sm text-[#a6adc8] mb-4">"Code Churn"—code that is deleted or refactored shortly after being written—is a key indicator of low-quality initial output. [51] Studies show this metric is dramatically increasing with AI adoption, suggesting a "generate-and-fix" cycle. [51]</p>
+                    <div class="chart-container h-80">
+                        <canvas id="codeChurnChart"></canvas>
+                    </div>
+                    <p class="text-xs text-[#6c7086] mt-4 text-center">Source: GitClear [51]</p>
+                </div>
+                <div class="bg-[#313244] p-6 rounded-lg shadow-2xl">
+                    <h3 class="text-xl font-bold mb-4 text-white">Vulnerability Hotspots</h3>
+                    <p class="text-sm text-[#a6adc8] mb-4">A critical concern is the introduction of security flaws. In one study, AI assistants produced code with vulnerabilities in 40% of security-critical tasks, highlighting the absolute need for human oversight and automated scanning. [66]</p>
+                     <div class="chart-container h-80">
+                        <canvas id="securityVulnerabilityChart"></canvas>
+                    </div>
+                    <p class="text-xs text-[#6c7086] mt-4 text-center">Source: Stanford / Pearce et al. [66]</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="workflow-shift" class="my-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white">The Evolving Developer Workflow</h2>
+                <p class="mt-2 text-[#a6adc8] max-w-2xl mx-auto">The developer's role is transforming from a pure code generator to a system orchestrator. The modern workflow embraces a "vibe, then verify" model, a best-practice advocated by leaders in code quality analysis. [53]</p>
+            </div>
+            <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8">
+                <div class="text-center p-6 rounded-lg flow-step border-2 w-full md:w-1/3">
+                    <div class="section-icon mb-2">💡</div>
+                    <h3 class="text-xl font-bold text-[#fab387]">1. Vibe (Generate)</h3>
+                    <p class="text-sm text-[#a6adc8]">Use the AI assistant to rapidly generate code, explore ideas, and automate boilerplate. This is the creative, high-velocity "vibe" phase. [14]</p>
+                </div>
+                <div class="transform rotate-90 md:rotate-0 text-5xl flow-arrow">&rarr;</div>
+                <div class="text-center p-6 rounded-lg flow-step border-2 w-full md:w-1/3">
+                    <div class="section-icon mb-2">🔬</div>
+                    <h3 class="text-xl font-bold text-[#fab387]">2. Verify (Analyze)</h3>
+                    <p class="text-sm text-[#a6adc8]">Critically review every line of AI-generated code. Use static analysis tools to automatically detect bugs, vulnerabilities, and code smells. [4]</p>
+                </div>
+                 <div class="transform rotate-90 md:rotate-0 text-5xl flow-arrow">&rarr;</div>
+                 <div class="text-center p-6 rounded-lg flow-step border-2 w-full md:w-1/3">
+                    <div class="section-icon mb-2">✅</div>
+                    <h3 class="text-xl font-bold text-[#fab387]">3. Commit (Integrate)</h3>
+                    <p class="text-sm text-[#a6adc8]">Only after rigorous human and automated verification is the code committed, ensuring quality and security are maintained.</p>
+                </div>
+            </div>
+             <p class="text-xs text-[#6c7086] mt-4 text-center">Workflow concept popularized by SonarSource [53]</p>
+        </section>
+
+        <section id="best-practices" class="my-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white">Mastering the Machine</h2>
+                <p class="mt-2 text-[#a6adc8] max-w-2xl mx-auto">Effective use requires discipline. Transition from a passive user to an active collaborator by mastering prompt engineering and context provision. [27]</p>
+            </div>
+            <div class="bg-[#313244] p-6 md:p-8 rounded-lg shadow-2xl">
+                 <h3 class="text-xl font-bold text-center mb-6 text-white">Anatomy of a Perfect Prompt</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 text-center">
+                    <div class="p-4 bg-[#1e1e2e] rounded-lg">
+                        <div class="text-2xl mb-2">👤</div>
+                        <h4 class="font-bold">Assign Role</h4>
+                        <p class="text-xs text-[#a6adc8]">"Act as an expert Python developer."</p>
+                    </div>
+                    <div class="p-4 bg-[#1e1e2e] rounded-lg">
+                        <div class="text-2xl mb-2">🎯</div>
+                        <h4 class="font-bold">Define Task</h4>
+                        <p class="text-xs text-[#a6adc8]">"Write a function to parse CSV data."</p>
+                    </div>
+                    <div class="p-4 bg-[#1e1e2e] rounded-lg">
+                        <div class="text-2xl mb-2">📚</div>
+                        <h4 class="font-bold">Provide Context</h4>
+                        <p class="text-xs text-[#a6adc8]">"Here is an example of a row..."</p>
+                    </div>
+                    <div class="p-4 bg-[#1e1e2e] rounded-lg">
+                        <div class="text-2xl mb-2">📏</div>
+                        <h4 class="font-bold">Set Constraints</h4>
+                        <p class="text-xs text-[#a6adc8]">"Do not use external libraries. Handle errors."</p>
+                    </div>
+                    <div class="p-4 bg-[#1e1e2e] rounded-lg">
+                        <div class="text-2xl mb-2">📄</div>
+                        <h4 class="font-bold">Format Output</h4>
+                        <p class="text-xs text-[#a6adc8]">"Return a list of dictionaries."</p>
+                    </div>
+                </div>
+                 <p class="text-xs text-[#6c7086] mt-4 text-center">Based on best practices from [90, 91, 92]</p>
+                <div class="mt-8">
+                    <h3 class="text-xl font-bold text-center mb-4 text-white">Advanced Prompting Techniques</h3>
+                    <p class="text-sm text-[#a6adc8] text-center mb-6 max-w-xl mx-auto">Leverage science-backed techniques to elicit more sophisticated reasoning from the AI, moving beyond simple queries to complex problem-solving. [88]</p>
+                    <div class="chart-container h-[450px]">
+                        <canvas id="promptTechniquesChart"></canvas>
+                    </div>
+                     <p class="text-xs text-[#6c7086] mt-4 text-center">Techniques validated in academic research [88, 89, 95-99]</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="references" class="my-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white">References</h2>
+                <p class="mt-2 text-[#a6adc8] max-w-2xl mx-auto">A comprehensive list of sources cited in this analysis.</p>
+            </div>
+            <div class="bg-[#313244] p-6 md:p-8 rounded-lg shadow-2xl max-w-6xl mx-auto">
+                <ol class="list-decimal list-inside space-y-2 text-xs text-[#bac2de] grid grid-cols-1 md:grid-cols-2 gap-x-8">
+                    <li>Dataquest: "What is an IDE and How Is It Used When Working with AI?"</li>
+                    <li>Dataquest: IDE Power and Features.</li>
+                    <li>Dev.to: "What is an AI Coding Assistant?"</li>
+                    <li>SonarSource: "What are AI Coding Assistants in Software Development?"</li>
+                    <li>Intellinez: "Introduction To AI-Powered Development Tools."</li>
+                    <li>Turing: "Using LLM Coding Assistants to Increase Software Development Productivity by 33%."</li>
+                    <li>JetBrains: "JetBrains IDEs Go AI."</li>
+                    <li>Comparing 5 AI Coding Assistants - DEV Community.</li>
+                    <li>Zencoder: "How to Use AI in Coding - 12 Best Practices in 2025."</li>
+                    <li>All Things Open: "6 limitations of AI code assistants."</li>
+                    <li>RevGen Partners: "4 Ways AI Coding Assistants Can Help Developers."</li>
+                    <li>Revelo: "AI-Generated Code: Benefits, Risks, and Usage."</li>
+                    <li>ScrumLaunch: "Best AI-Powered IDEs and Coding Assistants 2025."</li>
+                    <li>Baufest: "Assisted Development: The Role of AI in the IDEs."</li>
+                    <li>Shakudo: "Best AI Coding Assistants as of June 2025."</li>
+                    <li>Wikipedia: "Cursor (code editor)."</li>
+                    <li>GitHub Docs: "GitHub Copilot features."</li>
+                    <li>Visual Studio Code Docs: "GitHub Copilot in VS Code."</li>
+                    <li>JetBrains Help: "About Junie AI coding agent."</li>
+                    <li>Number Analytics: "Mastering Human-Computer Interaction in AI."</li>
+                    <li>Interaction Design Foundation: "What is Human-AI Interaction (HAX)?"</li>
+                    <li>arXiv: "In-IDE Human-AI Experience in the Era of Large Language Models."</li>
+                    <li>1Ansah Technologies: "AI and Human-Computer Interaction."</li>
+                    <li>Swimm: "AI Code Assistants: Key Capabilities and 13 Tools to Know About."</li>
+                    <li>Tabnine: "Tabnine AI Code Assistant."</li>
+                    <li>BSI/ANSSI: "AI Coding Assistants Report."</li>
+                    <li>Monterail: "AI-Powered Coding Assistants: Best Practices."</li>
+                    <li>Apriorit: "GitHub Copilot Review with Practical Examples."</li>
+                    <li>UiTM: "THE IMPACT OF AI TOOLS ON SOFTWARE DEVELOPMENT."</li>
+                    <li>JetBrains: "AI Assistant Features."</li>
+                    <li>Reddit: "I built an AI Assistant to help you actually start your next project."</li>
+                    <li>AI with Allie: "The 4 AI modes that will supercharge your workflow."</li>
+                    <li>DX: "GitHub Copilot vs. Cursor vs. Tabnine."</li>
+                    <li>IBM: "What Are Large Language Models (LLMs)?"</li>
+                    <li>Proofpoint: "What Are Large Language Models (LLMs)?"</li>
+                    <li>JetBrains: "JetBrains AI FAQ."</li>
+                    <li>Dev.to: "The Building Blocks of an AI Coding Assistant."</li>
+                    <li>Visual Studio Code Docs: "Tips and tricks for Copilot in VS Code."</li>
+                    <li>Sourcegraph: "Lessons from Building AI Coding Assistants."</li>
+                    <li>Adasci: "Mastering the Art of Mitigating AI Hallucinations."</li>
+                    <li>Medium: "What are AI hallucinations & how to mitigate them."</li>
+                    <li>Medium: "Build Your Own AI Coding Assistant."</li>
+                    <li>DevClass: "JetBrains goes live with Junie AI agent."</li>
+                    <li>JetBrains: "Junie, the AI coding agent by JetBrains."</li>
+                    <li>GitHub Docs: "What is GitHub Copilot?"</li>
+                    <li>Dev.to: "Top 10 AI Tools for Developers in 2024."</li>
+                    <li>Wikipedia: "Tabnine."</li>
+                    <li>AI Competence: "Copilot Vs CodeWhisperer Vs Tabnine Vs Cursor."</li>
+                    <li>AI Native Dev: "JetBrains Releases Junie: An Agentic AI Assistant."</li>
+                    <li>Reddit: "What Is Cursor AI Code Editor?"</li>
+                    <li>DevOps.com: "AI in Software Development: Productivity at the Cost of Code Quality?"</li>
+                    <li>SonarSource: "Generative AI Coding Assistants & Development Velocity."</li>
+                    <li>SonarSource: "AI Generated Code in Software Development."</li>
+                    <li>SonarSource: "AI Coding Assistants & Co-Pilots."</li>
+                    <li>SonarSource: "What is Gemini Code Assist?"</li>
+                    <li>Reddit: "Ensure code quality with Sonar and AI assistants."</li>
+                    <li>GitHub Blog: "Research: quantifying GitHub Copilot's impact."</li>
+                    <li>MIT GenAI: "The Productivity Effects of Generative AI."</li>
+                    <li>arXiv: "Transforming Software Development: Evaluating Efficiency."</li>
+                    <li>arXiv: "Transforming Software Development (duplicate)."</li>
+                    <li>GitHub Blog: "Research: Quantifying GitHub Copilot's impact in the enterprise with Accenture."</li>
+                    <li>Binmile: "AI-Assisted Software Development: Benefits, Drawbacks & More."</li>
+                    <li>Cprime: "Generative AI in Software Development: Survey Results."</li>
+                    <li>ESEC/FSE 2024: "AI-assisted Code Authoring at Scale."</li>
+                    <li>ResearchGate: "The Impact of Artificial Intelligence on Programmer Productivity."</li>
+                    <li>arXiv: "Using AI Assistants in Software Development: A Qualitative Study."</li>
+                    <li>arxiv.org.</li>
+                    <li>arXiv: "Towards Decoding Developer Cognition in the Age of AI Assistants."</li>
+                    <li>FSE 2025: "How Do Programming Students Use Generative AI?"</li>
+                    <li>arXiv: "Conversational AI as a Coding Assistant."</li>
+                    <li>GitHub Docs: "Best practices for using GitHub Copilot."</li>
+                    <li>GitHub Blog: "Using GitHub Copilot in your IDE."</li>
+                    <li>Codacy Blog: "Best Practices for Coding with AI in 2024."</li>
+                    <li>Medium: "Understanding Context Length in Large Language Models (LLMs)."</li>
+                    <li>DataNorth: "Context Length in LLMs: What Is It and Why It Is Important."</li>
+                    <li>Medium: "Long-Context Windows in Large Language Models."</li>
+                    <li>arXiv: "Dated Data: Tracing Knowledge Cutoffs in Large Language Models."</li>
+                    <li>Toolify: "Breaking the Limitations: The Future of Autoregressive Models."</li>
+                    <li>Wonder's Lab: "Some thoughts on autoregressive models."</li>
+                    <li>NSF: "Limitations of Autoregressive Models and Their Alternatives."</li>
+                    <li>Google Cloud: "What are AI hallucinations?"</li>
+                    <li>Built In: "What Are AI Hallucinations?"</li>
+                    <li>Wikipedia: "Hallucination (artificial intelligence)."</li>
+                    <li>IBM: "What Are AI Hallucinations?"</li>
+                    <li>C3 UNU: "The Invisible Threat in Your Code Editor: AI's Package Hallucination."</li>
+                    <li>Live Science: "AI hallucinates more frequently the more advanced it gets."</li>
+                    <li>FactSet: "AI Strategies Series: 7 Ways to Overcome Hallucinations."</li>
+                    <li>IBM: "What Is Prompt Engineering?"</li>
+                    <li>Prompting Guide: "Prompt Engineering Guide."</li>
+                    <li>InfoQ: "Prompt Engineering: Challenges, Strengths, and Its Place."</li>
+                    <li>LeadDev: "How to write better AI prompts."</li>
+                    <li>Ghost: "Prompt Engineering For Developers: 11 Concepts and Examples."</li>
+                    <li>Pieces for Developers: "Best practices for prompt engineering with AI Copilots."</li>
+                    <li>Hyqoo: "Prompt Engineering in Code Generation."</li>
+                    <li>IBM: "Prompt Engineering Techniques."</li>
+                    <li>SaaS.Guru: "Advanced Prompt Engineering Techniques."</li>
+                    <li>Mercity AI: "Advanced Prompt Engineering Techniques."</li>
+                    <li>Cisco Outshift: "6 advanced AI prompt engineering techniques."</li>
+                    <li>Medium: "7 Advanced Prompt Engineering Techniques."</li>
+                </ol>
+            </div>
+        </section>
+
+
+        <footer class="text-center mt-20 py-8 border-t border-[#45475a]">
+            <p class="text-sm text-[#a6adc8]">Infographic based on the report: "The Augmented Coder: An Industry Analysis of AI-Powered Development Environments."</p>
+            <p class="text-xs text-[#6c7086] mt-2">Data synthesized from sources including GitHub, GitClear, Microsoft, Accenture, and academic studies. For educational purposes only.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const wrapLabel = (str, maxWidth) => {
+            if (str.length <= maxWidth) {
+                return str;
+            }
+            const words = str.split(' ');
+            let lines = [];
+            let currentLine = '';
+            for (const word of words) {
+                if ((currentLine + word).length > maxWidth && currentLine.length > 0) {
+                    lines.push(currentLine.trim());
+                    currentLine = '';
+                }
+                currentLine += word + ' ';
+            }
+            lines.push(currentLine.trim());
+            return lines;
+        };
+
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            }
+            return label;
+        };
+        
+        const palette = {
+            peach: '#fab387',
+            blue: '#89b4fa',
+            red: '#f38ba8',
+            green: '#a6e3a1',
+            mauve: '#cba6f7',
+            text: '#cdd6f4',
+            subtext0: '#a6adc8',
+            surface1: '#45475a',
+            crust: '#11111b'
+        };
+
+        const chartDefaultOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: palette.text,
+                        font: {
+                            family: "'Inter', sans-serif"
+                        }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        title: tooltipTitleCallback
+                    },
+                    backgroundColor: palette.crust,
+                    titleColor: palette.text,
+                    bodyColor: palette.text,
+                    titleFont: { family: "'Inter', sans-serif" },
+                    bodyFont: { family: "'Inter', sans-serif" }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(108, 112, 134, 0.2)'
+                    },
+                    ticks: {
+                        color: palette.subtext0,
+                        font: {
+                            family: "'Inter', sans-serif"
+                        }
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        color: palette.subtext0,
+                        font: {
+                            family: "'Inter', sans-serif"
+                        }
+                    }
+                }
+            }
+        };
+
+        new Chart(document.getElementById('timeSavingsChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Documentation', 'Repetitive Coding', 'Unit Testing', 'Debugging', 'Autocompletion'],
+                datasets: [{
+                    label: 'Projected Time Savings (%)',
+                    data: [50, 40, 35, 30, 50],
+                    backgroundColor: [palette.peach, palette.blue, palette.green, palette.mauve, palette.red],
+                    borderColor: '#313244',
+                    borderWidth: 2
+                }]
+            },
+            options: { ...chartDefaultOptions }
+        });
+
+        new Chart(document.getElementById('codeChurnChart'), {
+            type: 'line',
+            data: {
+                labels: ['2021 (Pre-AI)', '2022', '2023', '2024 (Projected)'],
+                datasets: [{
+                    label: 'Code Churn Rate',
+                    data: [7.5, 9.8, 12.5, 15],
+                    fill: true,
+                    borderColor: palette.red,
+                    backgroundColor: 'rgba(243, 139, 168, 0.3)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                ...chartDefaultOptions,
+                scales: {
+                    ...chartDefaultOptions.scales,
+                    y: { ...chartDefaultOptions.scales.y,
+                        ticks: { ...chartDefaultOptions.scales.y.ticks, callback: value => value + '%' }
+                    }
+                }
+            }
+        });
+        
+        new Chart(document.getElementById('securityVulnerabilityChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Code with Security Vulnerabilities', 'Secure Code'],
+                datasets: [{
+                    data: [40, 60],
+                    backgroundColor: [palette.red, palette.surface1],
+                    borderColor: '#181825',
+                    borderWidth: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                 plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: palette.text,
+                            font: { family: "'Inter', sans-serif" }
+                        }
+                    },
+                    tooltip: {
+                       callbacks: {
+                            title: tooltipTitleCallback
+                        },
+                        backgroundColor: palette.crust,
+                        titleColor: palette.text,
+                        bodyColor: palette.text
+                    },
+                    title: {
+                        display: true,
+                        text: 'AI Output in Security-Critical Tasks',
+                        color: palette.text,
+                        font: { size: 16, family: "'Inter', sans-serif" }
+                    }
+                }
+            }
+        });
+
+        const promptTechniquesLabels = [
+            'Chain-of-Thought (CoT)',
+            'Self-Consistency',
+            'ReAct (Reason + Act)',
+            'Step-Back Prompting',
+            'Few-Shot Prompting'
+        ].map(label => wrapLabel(label, 16));
+
+        new Chart(document.getElementById('promptTechniquesChart'), {
+            type: 'radar',
+            data: {
+                labels: promptTechniquesLabels,
+                datasets: [{
+                    label: 'Effectiveness for Complex Tasks',
+                    data: [9, 8, 8, 7, 6],
+                    fill: true,
+                    backgroundColor: 'rgba(137, 180, 250, 0.4)',
+                    borderColor: palette.blue,
+                    pointBackgroundColor: palette.blue,
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: palette.blue
+                }]
+            },
+            options: {
+                 responsive: true,
+                maintainAspectRatio: false,
+                 plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                       callbacks: {
+                            title: tooltipTitleCallback
+                        },
+                        backgroundColor: palette.crust,
+                        titleColor: palette.text,
+                        bodyColor: palette.text
+                    }
+                },
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(108, 112, 134, 0.2)' },
+                        grid: { color: 'rgba(108, 112, 134, 0.2)' },
+                        pointLabels: { 
+                            color: palette.text,
+                            font: { size: 12, family: "'Inter', sans-serif" }
+                        },
+                        ticks: {
+                            backdropColor: 'transparent',
+                            color: palette.subtext0
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
