@@ -49,7 +49,7 @@ export default function TodoUploader() {
       {result && (
         <div style={{ marginTop: 24 }}>
           <h3>To-Do List (JSON):</h3>
-          <pre style={{ background: "#f6f8fa", padding: 12, borderRadius: 4 }}>{JSON.stringify(result, null, 2)}</pre>
+          <pre style={{ background: "#f6f8fa", color: "#222", padding: 12, borderRadius: 4, overflowX: "auto", whiteSpace: "pre-wrap", wordBreak: "break-word", maxWidth: "100%" }}>{JSON.stringify(result, null, 2)}</pre>
         </div>
       )}
     </div>
