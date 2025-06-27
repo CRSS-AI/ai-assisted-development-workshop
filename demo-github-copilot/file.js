@@ -1,4 +1,15 @@
 import { AzureChatOpenAI } from "@langchain/openai";
+import dotenv from "dotenv";
+
+// Load environment variables from .env file
+dotenv.config();
+
+// Debug: Check if environment variables are loaded
+console.log("Environment variables loaded:");
+console.log("API Key exists:", !!process.env.AZURE_OPENAI_API_KEY);
+console.log("Instance Name:", process.env.AZURE_OPENAI_API_INSTANCE_NAME);
+console.log("Deployment Name:", process.env.AZURE_OPENAI_API_DEPLOYMENT_NAME);
+console.log("API Version:", process.env.AZURE_OPENAI_API_VERSION);
 
 const llm = new AzureChatOpenAI({
   model: "gpt-4.1-mini",
@@ -18,4 +29,5 @@ const aiMsg = await llm.invoke([
   ],
   ["human", "I love programming."],
 ]);
-aiMsg;
+
+console.log("Translation:", aiMsg.content);
