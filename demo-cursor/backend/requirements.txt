@@ -1,2 +1,0 @@
-firecrawl==0.1.0
-beautifulsoup4 

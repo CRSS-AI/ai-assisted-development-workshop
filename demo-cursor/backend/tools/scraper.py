@@ -32,8 +32,7 @@ if result.success:
     clean_text = clean_html(result.html)
     # Create 'data' directory if it doesn't exist
     os.makedirs("data", exist_ok=True)
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"data/crss_firecrawl_{timestamp}.json"
+    filename = f"data/scraped_data.json"
     with open(filename, "w", encoding="utf-8") as f:
         json.dump({
             "clean_text": clean_text
