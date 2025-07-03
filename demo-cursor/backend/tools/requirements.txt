@@ -1,0 +1,6 @@
+firecrawl>=2.0.0
+beautifulsoup4
+Flask
+requests
+python-dotenv
+flask-cors 

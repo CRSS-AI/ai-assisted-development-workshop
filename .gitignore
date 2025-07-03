@@ -1,0 +1,98 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Virtual environments
+venv/
+.env/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# VS Code settings
+.vscode/
+
+# PyCharm settings
+.idea/
+
+# Data output
+/data/
+*.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.env.*
+
+# Test and coverage outputs
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+
+# pytest
+.pytest_cache/
+
+# Node.js
+node_modules/
+npm-debug.log
+
+# Python venv
+tools/venv/
+tools/__pycache__/
+tools/*.pyc
+
+# Datos y archivos temporales
+tools/data/*.json
+!tools/data/scraped_data.json  # Versiona solo este archivo, ignora otros JSON en data/
+
+# VSCode settings (opcional)
+.vscode/
+
+# Otros archivos temporales
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Test y coverage
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+
+# pytest
+.pytest_cache/ 
