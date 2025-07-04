@@ -267,7 +267,7 @@
   btn.addEventListener('click', () => {
     if (!hasShownWelcome) {
       setTimeout(() => {
-        addMessage('Hello! I\'m your CRSS assistant. I can help you learn about our software development services, answer questions about working with us, or guide you through the process of starting a project. What would you like to know?', 'agent');
+        addMessage('Ask a question to start chatting with CRSS Assistant.', 'agent');
         hasShownWelcome = true;
       }, 500);
     }

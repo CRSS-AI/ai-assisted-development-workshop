@@ -7,9 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { fileURLToPath } from 'url';
 
 import { AzureChatOpenAI } from '@langchain/openai';
-import { HumanMessage, AIMessage } from '@langchain/core/messages';
-import { ChatPromptTemplate } from '@langchain/core/prompts';
-import { RunnableSequence } from '@langchain/core/runnables';
+import { HumanMessage, AIMessage, SystemMessage } from '@langchain/core/messages';
 import { StateGraph, END } from '@langchain/langgraph';
 
 
@@ -57,8 +55,8 @@ const model = new AzureChatOpenAI({
   maxTokens: 1024,
 });
 
-// System prompt template
-const systemPrompt = ChatPromptTemplate.fromTemplate(`
+// System prompt as a string
+const systemPromptString = `
 You are a helpful purchase advisor for Costa Rica Software Services (CRSS). 
 You help potential clients understand our services and guide them through the process of working with us.
 
@@ -75,18 +73,7 @@ Key Information about CRSS:
 
 Always be helpful, professional, and provide accurate information about CRSS services. 
 If you don't know something specific, suggest they contact us directly.
-`);
-
-// Create the conversation chain
-const conversationChain = RunnableSequence.from([
-  {
-    system: systemPrompt,
-    human: (input) => input.human,
-    history: (input) => input.history,
-  },
-  systemPrompt,
-  model,
-]);
+`;
 
 // Define the state schema for our conversation graph
 const stateSchema = {
@@ -113,22 +100,19 @@ const createConversationGraph = () => {
   // Add the main conversation node
   workflow.addNode('conversation', async (state) => {
     const { messages, current_user_message, conversation_id } = state;
-    
-    // Prepare the conversation history
-    const history = messages.map(msg => {
-      if (msg.type === 'human') {
-        return new HumanMessage(msg.content);
-      } else if (msg.type === 'ai') {
-        return new AIMessage(msg.content);
-      }
-      return null;
-    }).filter(Boolean);
+    // Build message history: system prompt once, then all previous messages, then current user message
+    const messageHistory = [
+      new SystemMessage(systemPromptString),
+      ...messages.map(msg =>
+        msg.type === 'human'
+          ? new HumanMessage(msg.content)
+          : new AIMessage(msg.content)
+      ),
+      new HumanMessage(current_user_message)
+    ];
 
     // Get response from the model
-    const response = await conversationChain.invoke({
-      human: current_user_message,
-      history: history,
-    });
+    const response = await model.invoke(messageHistory);
 
     // Add the new messages to the conversation
     const newMessages = [
