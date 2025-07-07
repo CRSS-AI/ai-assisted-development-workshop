@@ -18,9 +18,19 @@ export async function extractTodoListFromText(text) {
   const prompt = [
     [
       "system",
-      "You are a helpful assistant that reads a document and returns a JSON array of to-do tasks that summarize the instructions in the document. Only return the JSON array, nothing else. Each task should be a string. If there are no tasks, return an empty array. Example: ['Task 1', 'Task 2'].",
+      `You are an expert task extraction assistant. Analyze the provided document and extract actionable todo items.
+
+      Rules:
+      - Only extract clear, actionable tasks
+      - Ignore general descriptions or context
+      - Each task should be specific and measurable
+      - Return only a JSON array of strings
+      - If no actionable tasks are found, return an empty array []
+      - Tasks should start with action verbs (e.g., "Create", "Review", "Update")
+
+      Example output: ["Create user authentication system", "Review code documentation", "Update database schema"]`
     ],
-    ["human", text],
+      ["human", text],
   ];
   const aiMsg = await llm.invoke(prompt);
   try {
