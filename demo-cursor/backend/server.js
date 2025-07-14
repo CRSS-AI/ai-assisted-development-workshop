@@ -46,7 +46,7 @@ Guidelines:
 - If a question isn't covered in the knowledge base, suggest contacting CRSS directly.
 - Always be professional, helpful, and accurate.
 
-Respond only as the CRSS assistant.
+Respond only as the CRSS assistant, don't answer questions about other topics, say that you are a purchase advisor for CRSS and kindly say that you only answer CRSS related questions.
 `;
 
 const conversations = new Map();
@@ -121,54 +121,6 @@ app.post('/api/ask', async (req, res) => {
     } else {
       res.end();
     }
-  }
-});
-
-app.get('/api/conversation/:conversationId', (req, res) => {
-  try {
-    const { conversationId } = req.params;
-    const conversation = conversations.get(conversationId);
-    if (!conversation) {
-      return res.status(404).json({ error: 'Conversation not found' });
-    }
-    res.json({
-      conversation_id: conversation.id,
-      messages: conversation.messages,
-      created_at: conversation.created_at,
-      updated_at: conversation.updated_at,
-    });
-  } catch (error) {
-    console.error('Error getting conversation:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
-app.get('/api/conversations', (req, res) => {
-  try {
-    const conversationList = Array.from(conversations.values()).map(conv => ({
-      id: conv.id,
-      message_count: conv.messages.length,
-      created_at: conv.created_at,
-      updated_at: conv.updated_at,
-    }));
-    res.json({ conversations: conversationList });
-  } catch (error) {
-    console.error('Error getting conversations:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
-app.delete('/api/conversation/:conversationId', (req, res) => {
-  try {
-    const { conversationId } = req.params;
-    const deleted = conversations.delete(conversationId);
-    if (!deleted) {
-      return res.status(404).json({ error: 'Conversation not found' });
-    }
-    res.json({ message: 'Conversation deleted successfully' });
-  } catch (error) {
-    console.error('Error deleting conversation:', error);
-    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
