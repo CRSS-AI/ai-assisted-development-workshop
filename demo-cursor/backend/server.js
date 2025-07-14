@@ -57,22 +57,19 @@ const model = new AzureChatOpenAI({
 
 // System prompt as a string
 const systemPromptString = `
-You are a helpful purchase advisor for Costa Rica Software Services (CRSS). 
-You help potential clients understand our services and guide them through the process of working with us.
+You are a concise and helpful purchase advisor for Costa Rica Software Services (CRSS). 
+Your role is to clearly explain our services and assist potential clients with brief, professional answers.
 
 CRSS Knowledge Base:
 ${scrapedContent}
 
-Key Information about CRSS:
-- We connect accomplished software engineers with clients
-- 20+ years of experience in Costa Rica's tech market
-- 200+ successful software projects
-- 100% client satisfaction
-- Services: Full Stack Development, Mobile App Development, Enterprise Web Applications, UI/UX Design, Quality Assurance, Backend & API Development
-- Time zone advantage: Costa Rica is in the same time zone as US Central Time
+Guidelines:
+- Keep responses short unless the user asks for more detail.
+- Answer directly. Skip fluff or overly long explanations.
+- If a question isn't covered in the knowledge base, suggest contacting CRSS directly.
+- Always be professional, helpful, and accurate.
 
-Always be helpful, professional, and provide accurate information about CRSS services. 
-If you don't know something specific, suggest they contact us directly.
+Respond only as the CRSS assistant.
 `;
 
 // Define the state schema for our conversation graph
@@ -167,36 +164,67 @@ app.post('/api/ask', async (req, res) => {
     // Get or create conversation
     const conversation = getOrCreateConversation(convId);
     
-    // Create the conversation graph
-    const graph = createConversationGraph();
-    
-    // Run the conversation
-    const result = await graph.invoke({
-      messages: conversation.messages,
-      current_user_message: message,
-      conversation_id: convId,
+    // --- STREAMING SETUP ---
+    // Crea un modelo con streaming habilitado
+    const streamingModel = new AzureChatOpenAI({
+      azureOpenAIApiKey: AZURE_OPENAI_API_KEY,
+      azureOpenAIApiDeploymentName: AZURE_OPENAI_API_DEPLOYMENT_NAME,
+      azureOpenAIApiVersion: AZURE_OPENAI_API_VERSION,
+      azureOpenAIApiBasePath: AZURE_OPENAI_API_BASE_PATH,
+      azureOpenAIApiInstanceName: AZURE_OPENAI_API_INSTANCE_NAME,
+      openAIApiType: "azure",
+      temperature: 0.7,
+      maxTokens: 1024,
+      stream: true,
     });
 
-    // Update conversation in storage
-    conversation.messages = result.messages;
+    // Construye el historial de mensajes igual que antes
+    const messageHistory = [
+      new SystemMessage(systemPromptString),
+      ...conversation.messages.map(msg =>
+        msg.type === 'human'
+          ? new HumanMessage(msg.content)
+          : new AIMessage(msg.content)
+      ),
+      new HumanMessage(message)
+    ];
+
+    // Configura headers para streaming
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    res.setHeader('Transfer-Encoding', 'chunked');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    res.flushHeaders();
+
+    let aiReply = '';
+    try {
+      for await (const chunk of await streamingModel.stream(messageHistory)) {
+        const token = chunk?.content || '';
+        aiReply += token;
+        res.write(token);
+      }
+    } catch (streamErr) {
+      console.error('Streaming error:', streamErr);
+      res.write('\n[Error en el stream de respuesta]');
+    }
+
+    // Guarda la conversación como antes
+    conversation.messages.push(
+      { type: 'human', content: message, timestamp: new Date().toISOString() },
+      { type: 'ai', content: aiReply, timestamp: new Date().toISOString() }
+    );
     conversation.updated_at = new Date().toISOString();
     conversations.set(convId, conversation);
 
-    // Get the last AI message
-    const lastAIMessage = result.messages[result.messages.length - 1];
-    
-    res.json({
-      reply: lastAIMessage.content,
-      conversation_id: convId,
-      message_id: uuidv4(),
-    });
+    res.end();
 
   } catch (error) {
     console.error('Error in /api/ask:', error);
-    res.status(500).json({ 
-      error: 'Internal server error', 
-      details: error.message 
-    });
+    if (!res.headersSent) {
+      res.status(500).json({ error: 'Internal server error', details: error.message });
+    } else {
+      res.end();
+    }
   }
 });
 

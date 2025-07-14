@@ -2,16 +2,27 @@
 (function() {
   // Lightweight markdown to HTML converter (basic)
   function markdownToHtml(md) {
-    let html = md
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // bold
-      .replace(/\*(.*?)\*/g, '<em>$1</em>') // italics
-      .replace(/`([^`]+)`/g, '<code>$1</code>') // inline code
-      .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank">$1</a>') // links
-      .replace(/^\s*\n/gm, '<br>') // newlines
-      .replace(/\n\s*\n/g, '<br><br>') // double newlines
-      .replace(/^- (.*)$/gm, '<li>$1</li>'); // unordered list
-    // Wrap <li> in <ul> if any
-    if (/<li>/.test(html)) html = '<ul>' + html + '</ul>';
+    // Enlaces
+    let html = md.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank">$1</a>');
+    // Negrita
+    html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    // Cursiva
+    html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+    // Código inline
+    html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+    // Listas: soporta - y *
+    html = html.replace(/((?:^|\n)(?:[\*\-] .*(?:\n[\*\-] .*)+))/g, function(match) {
+      try {
+        const items = match.trim().split('\n').map(line => line.replace(/^[\*\-] /, '')).map(item => `<li>${item}</li>`).join('');
+        return `<ul>${items}</ul>`;
+      } catch (e) {
+        return match;
+      }
+    });
+    // Saltos de línea dobles a <br><br>
+    html = html.replace(/\n\s*\n/g, '<br><br>');
+    // Saltos de línea simples a <br>
+    html = html.replace(/\n/g, '<br>');
     return html;
   }
 
@@ -79,7 +90,11 @@
   background: rgba(255,255,255,0.2); padding: 2px 4px; border-radius: 3px; font-family: monospace;
 }
 .message.agent .content a { color: #fff; text-decoration: underline; }
-.message.agent .content ul { margin: 8px 0; padding-left: 20px; }
+.message.agent .content ul {
+  margin: 8px 0;
+  padding-left: 20px;
+  list-style-type: disc; /* <-- Esto fuerza el bullet clásico */
+}
 .message.agent .content li { margin: 4px 0; }
 #agent-widget-chat-input {
   padding: 12px; background: #fff; border-top: 1px solid #e9ecef;
@@ -104,19 +119,20 @@
 #agent-widget-chat-input button:disabled {
   background: #ccc; cursor: not-allowed;
 }
-.typing-indicator {
-  display: none; padding: 9px 13px; background: #F26B01; color: #fff; border-radius: 16px;
-  margin-right: auto; border-bottom-left-radius: 4px; max-width: 80%; font-size: 14px;
+.typing-dots {
+  display: inline-block;
 }
-.typing-indicator span {
-  display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #fff;
-  margin: 0 1.5px; animation: typing 1.4s infinite ease-in-out;
+.typing-dots span {
+  display: inline-block;
+  animation: blink 1.2s infinite both;
+  font-size: 18px;
+  opacity: 0.5;
 }
-.typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
-.typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
-@keyframes typing {
-  0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
-  40% { transform: scale(1); opacity: 1; }
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes blink {
+  0%, 80%, 100% { opacity: 0.5; }
+  40% { opacity: 1; }
 }
 `;
 
@@ -132,9 +148,6 @@
       </div>
       <div id="agent-widget-chat-messages">
         <!-- Messages will be appended here -->
-        <div class="typing-indicator">
-          <span></span><span></span><span></span>
-        </div>
       </div>
       <div id="agent-widget-chat-input">
         <input type="text" placeholder="Type your message..." maxlength="500">
@@ -152,7 +165,6 @@
   const messagesContainer = document.getElementById('agent-widget-chat-messages');
   const input = document.querySelector('#agent-widget-chat-input input');
   const sendBtn = document.querySelector('#agent-widget-chat-input button');
-  const typingIndicator = document.querySelector('.typing-indicator');
 
   // Conversation state
   let conversationId = null;
@@ -161,13 +173,12 @@
   // Show/hide typing indicator
   function showTyping() {
     isTyping = true;
-    typingIndicator.style.display = 'block';
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    // No showTyping ni hideTyping
   }
 
   function hideTyping() {
     isTyping = false;
-    typingIndicator.style.display = 'none';
+    // No showTyping ni hideTyping
   }
 
   // Add message to chat
@@ -180,16 +191,16 @@
     } else {
       messageDiv.textContent = content;
     }
-    // Insert before typing indicator so typing stays at the bottom
-    messagesContainer.insertBefore(messageDiv, typingIndicator);
+    // Agregar al final del contenedor de mensajes
+    messagesContainer.appendChild(messageDiv);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
   }
 
   // Send message to backend
   async function sendMessage(message) {
+    let agentMessageDiv = null;
     try {
-      showTyping();
-      
+      // No showTyping ni hideTyping
       const response = await fetch('http://localhost:5000/api/ask', {
         method: 'POST',
         headers: {
@@ -205,20 +216,40 @@
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json();
-      
-      // Store conversation ID for future messages
-      if (data.conversation_id) {
-        conversationId = data.conversation_id;
+      // --- STREAMING RESPONSE ---
+      const reader = response.body.getReader();
+      let decoder = new TextDecoder('utf-8');
+      let aiMessage = '';
+      agentMessageDiv = document.createElement('div');
+      agentMessageDiv.className = 'message agent';
+      // Mostrar tres puntos animados mientras no haya texto
+      agentMessageDiv.innerHTML = '<div class="content"><span class="typing-dots"><span>.</span><span>.</span><span>.</span></span></div>';
+      messagesContainer.appendChild(agentMessageDiv);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+      // Read the stream chunk by chunk, con retraso para suavidad
+      let firstChunk = true;
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const chunk = decoder.decode(value);
+        aiMessage += chunk;
+        // Al llegar el primer chunk, reemplazar los puntos por el texto real
+        if (firstChunk) {
+          firstChunk = false;
+        }
+        agentMessageDiv.querySelector('.content').innerHTML = markdownToHtml(aiMessage);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        await new Promise(resolve => setTimeout(resolve, 20)); // retraso para suavidad
       }
-      
-      hideTyping();
-      addMessage(data.reply, 'agent');
-      
+
     } catch (error) {
       console.error('Error sending message:', error);
-      hideTyping();
-      addMessage('Sorry, I\'m having trouble connecting right now. Please try again later.', 'agent');
+      if (agentMessageDiv) {
+        agentMessageDiv.querySelector('.content').innerHTML = markdownToHtml('Sorry, I\'m having trouble connecting right now. Please try again later.');
+      } else {
+        addMessage('Sorry, I\'m having trouble connecting right now. Please try again later.', 'agent');
+      }
     }
   }
 
