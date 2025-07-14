@@ -1,16 +1,10 @@
 // Agent Widget (Floating Chat) - CRSS Branded with Conversation Memory
 (function() {
-  // Lightweight markdown to HTML converter (basic)
   function markdownToHtml(md) {
-    // Enlaces
     let html = md.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank">$1</a>');
-    // Negrita
     html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-    // Cursiva
     html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
-    // Código inline
     html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
-    // Listas: soporta - y *
     html = html.replace(/((?:^|\n)(?:[\*\-] .*(?:\n[\*\-] .*)+))/g, function(match) {
       try {
         const items = match.trim().split('\n').map(line => line.replace(/^[\*\-] /, '')).map(item => `<li>${item}</li>`).join('');
@@ -19,14 +13,11 @@
         return match;
       }
     });
-    // Saltos de línea dobles a <br><br>
     html = html.replace(/\n\s*\n/g, '<br><br>');
-    // Saltos de línea simples a <br>
     html = html.replace(/\n/g, '<br>');
     return html;
   }
 
-  // Inject styles
   const style = document.createElement('style');
   style.innerHTML = `
 #agent-widget-btn {
@@ -69,7 +60,15 @@
   margin-left: 8px;
 }
 #agent-widget-chat-messages {
-  flex: 1; overflow-y: auto; padding: 14px 12px; background: #f8f9fa;
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 12px;
+  background: #f8f9fa;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+#agent-widget-chat-messages::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 .message {
   margin-bottom: 10px; padding: 9px 13px; border-radius: 16px; max-width: 80%;
@@ -93,7 +92,7 @@
 .message.agent .content ul {
   margin: 8px 0;
   padding-left: 20px;
-  list-style-type: disc; /* <-- Esto fuerza el bullet clásico */
+  list-style-type: disc;
 }
 .message.agent .content li { margin: 4px 0; }
 #agent-widget-chat-input {
@@ -135,10 +134,8 @@
   40% { opacity: 1; }
 }
 `;
-
   document.head.appendChild(style);
 
-  // Create widget HTML
   const widgetHTML = `
     <div id="agent-widget-btn" title="Chat with CRSS Assistant">💬</div>
     <div id="agent-widget-chat">
@@ -146,19 +143,15 @@
         <span>CRSS Assistant</span>
         <button class="close-btn" title="Close chat">×</button>
       </div>
-      <div id="agent-widget-chat-messages">
-        <!-- Messages will be appended here -->
-      </div>
+      <div id="agent-widget-chat-messages"></div>
       <div id="agent-widget-chat-input">
         <input type="text" placeholder="Type your message..." maxlength="500">
         <button title="Send message">→</button>
       </div>
     </div>
   `;
-
   document.body.insertAdjacentHTML('beforeend', widgetHTML);
 
-  // Get elements
   const btn = document.getElementById('agent-widget-btn');
   const chat = document.getElementById('agent-widget-chat');
   const closeBtn = document.querySelector('.close-btn');
@@ -166,41 +159,24 @@
   const input = document.querySelector('#agent-widget-chat-input input');
   const sendBtn = document.querySelector('#agent-widget-chat-input button');
 
-  // Conversation state
   let conversationId = null;
   let isTyping = false;
 
-  // Show/hide typing indicator
-  function showTyping() {
-    isTyping = true;
-    // No showTyping ni hideTyping
-  }
-
-  function hideTyping() {
-    isTyping = false;
-    // No showTyping ni hideTyping
-  }
-
-  // Add message to chat
   function addMessage(content, type) {
     const messageDiv = document.createElement('div');
     messageDiv.className = `message ${type}`;
-    
     if (type === 'agent') {
       messageDiv.innerHTML = `<div class="content">${markdownToHtml(content)}</div>`;
     } else {
       messageDiv.textContent = content;
     }
-    // Agregar al final del contenedor de mensajes
     messagesContainer.appendChild(messageDiv);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
   }
 
-  // Send message to backend
   async function sendMessage(message) {
     let agentMessageDiv = null;
     try {
-      // No showTyping ni hideTyping
       const response = await fetch('http://localhost:5000/api/ask', {
         method: 'POST',
         headers: {
@@ -211,38 +187,26 @@
           conversation_id: conversationId
         }),
       });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      // --- STREAMING RESPONSE ---
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const reader = response.body.getReader();
       let decoder = new TextDecoder('utf-8');
       let aiMessage = '';
       agentMessageDiv = document.createElement('div');
       agentMessageDiv.className = 'message agent';
-      // Mostrar tres puntos animados mientras no haya texto
       agentMessageDiv.innerHTML = '<div class="content"><span class="typing-dots"><span>.</span><span>.</span><span>.</span></span></div>';
       messagesContainer.appendChild(agentMessageDiv);
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
-      // Read the stream chunk by chunk, con retraso para suavidad
       let firstChunk = true;
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
         const chunk = decoder.decode(value);
         aiMessage += chunk;
-        // Al llegar el primer chunk, reemplazar los puntos por el texto real
-        if (firstChunk) {
-          firstChunk = false;
-        }
+        if (firstChunk) { firstChunk = false; }
         agentMessageDiv.querySelector('.content').innerHTML = markdownToHtml(aiMessage);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        await new Promise(resolve => setTimeout(resolve, 20)); // retraso para suavidad
+        await new Promise(resolve => setTimeout(resolve, 20));
       }
-
     } catch (error) {
       console.error('Error sending message:', error);
       if (agentMessageDiv) {
@@ -253,7 +217,6 @@
     }
   }
 
-  // Handle send button click
   function handleSend() {
     const message = input.value.trim();
     if (message && !isTyping) {
@@ -263,7 +226,6 @@
     }
   }
 
-  // Event listeners
   btn.addEventListener('click', () => {
     btn.style.display = 'none';
     chat.style.display = 'flex';
@@ -276,24 +238,17 @@
   });
 
   sendBtn.addEventListener('click', handleSend);
-
   input.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      handleSend();
-    }
+    if (e.key === 'Enter') handleSend();
   });
 
-  // Close chat when clicking outside (optional)
   document.addEventListener('click', (e) => {
-    if (chat.style.display === 'flex' && 
-        !chat.contains(e.target) && 
-        !btn.contains(e.target)) {
+    if (chat.style.display === 'flex' && !chat.contains(e.target) && !btn.contains(e.target)) {
       chat.style.display = 'none';
       btn.style.display = 'flex';
     }
   });
 
-  // Welcome message when chat is first opened
   let hasShownWelcome = false;
   btn.addEventListener('click', () => {
     if (!hasShownWelcome) {
@@ -303,5 +258,4 @@
       }, 500);
     }
   });
-
 })(); 
