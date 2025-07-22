@@ -1,0 +1,1 @@
+This project uses node and next.js with app router.
