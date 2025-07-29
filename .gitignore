@@ -21,7 +21,7 @@ venv/
 
 # Data output
 /data/
-*.json
+package-lock.json
 
 # OS files
 .DS_Store

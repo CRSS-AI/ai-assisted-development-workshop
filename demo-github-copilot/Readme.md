@@ -4,25 +4,7 @@ This guide will help you create the copilot aided Agentic Todo App.
 
 ## Setup Instructions
 
-### 1. Create a new Next.js project in the demo-github-copilot folder
-
-```bash
-npx create-next-app@latest {project_name}
-```
-
-Replace `{project_name}` with your desired project name.
-
-### 2. Navigate into the created project
-
-```bash
-cd {project_name}
-```
-
-### 3. Set up the agent
-
-- Move the Agent folder into the created `src` directory
-
-### 4. Create environment variables file
+### 1. Create environment variables file
 
 Create a `.env` file in the root of your project:
 
@@ -32,7 +14,7 @@ touch .env
 
 Add the content Dani will provide in the chat to the `.env` file
 
-### 5. Start the development server
+### 2. Start the development server
 
 ```bash
 npm run dev
