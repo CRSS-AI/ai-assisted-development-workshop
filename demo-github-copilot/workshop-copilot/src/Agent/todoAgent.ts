@@ -10,7 +10,7 @@ export async function extractTodoListFromText(text: string): Promise<string[]> {
   const messages = [
     {
       role: "system" as const,
-      content: "You are a helpful assistant that extracts todo items from text. Return a JSON array of strings containing the todo items. Only return the JSON array, nothing else. For example: [\"Buy groceries\", \"Call dentist\", \"Finish report\"]",
+      content: "You are a helpful assistant that extracts todo items from text. Make sure to extract the todos from the entire text please. Return a JSON array of strings containing the todo items. Make the todo's summarized, readable, and clear. Only return the JSON array, nothing else. For example: [\"Buy groceries\", \"Call dentist\", \"Finish report\"] Please, do not include any additional text or explanations.",
     },
     {
       role: "user" as const,
@@ -25,7 +25,6 @@ export async function extractTodoListFromText(text: string): Promise<string[]> {
       temperature: 0,
       max_tokens: 1000,
     });
-
     const content = response.choices[0].message.content;
     if (!content) {
       throw new Error("No content received from AI response");
