@@ -18,7 +18,7 @@ Create a `.env` file in the root of your project:
 touch .env
 ```
 
-Add the content Dani will provide in the chat to the `.env` file
+Add the content that will be provided in the chat to the `.env` file
 
 ### 3. Start the development server
 
