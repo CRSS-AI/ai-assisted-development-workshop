@@ -3,7 +3,7 @@ import { AzureOpenAI } from "openai";
 export async function extractTodoListFromText(text: string): Promise<string[]> {
   const client = new AzureOpenAI({
     apiKey: process.env.AZURE_OPENAI_API_KEY,
-    endpoint: `https://${process.env.AZURE_OPENAI_API_INSTANCE_NAME}.openai.azure.com/`,
+    endpoint: `${process.env.AZURE_OPENAI_API_BASE_PATH}`,
     apiVersion: process.env.AZURE_OPENAI_API_VERSION,
   });
 
