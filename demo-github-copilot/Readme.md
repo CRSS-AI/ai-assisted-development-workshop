@@ -35,3 +35,6 @@ Your Next.js application will be available at `http://localhost:3000`.
 - The agent files should be properly configured in the `src` directory
 - Wait for Dani to provide the specific environment variable content for the `.env` file
 - The agent will be deactivated after the workshop is complete.
+
+Prompt
+Using next.js, create a simple page that receives a txt or .md file from the user. the text must be sent to the extractTodoListfromText function in the Agent/todoAgent.js, which uses an Azure Open Ai model and a .env file that already exists. This should return a json file that should be displayed in the front end as the result. Make sure to delete the content of any existing page before developing the page for the app. Handle errors so that when an invalid format is used for the file upload, the app does not break. Also create a mockup version of the to do list. If the file upload does not work, display the mockup instead in the front end.
